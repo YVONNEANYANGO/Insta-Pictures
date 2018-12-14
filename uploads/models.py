@@ -8,4 +8,9 @@ class Image(models.Model):
     Likes = models.CharField(max_length =10)
     Comments = models.CharField(max_length =100)
     Profile_pic = models.ForeignKey
+
+
+class Profile(models.Model):
+    Profile_photo =
+    Bio = models.CharField(max_length = 500)
     
