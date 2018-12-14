@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 class Profile(models.Model):
     Profile = models.ImageField(upload_to = 'images/')
+    User_Name = models.CharField(max_length = 60)
     Bio = models.CharField(max_length = 500)
 
     # Methods
@@ -41,5 +42,9 @@ class Image(models.Model):
     def __str__(self):
         return self.name
 
+    @classmethod
+    def search_by_Profile_User_Name(cls,search_term):
+        uploads = cls.objects.filter(user_name__icontains=search_term)
+        return images
 
 
