@@ -1,4 +1,5 @@
 from django.db import models
+import datetime as dt
 
 # Create your models here.
 class Profile(models.Model):
@@ -18,7 +19,7 @@ class Profile(models.Model):
         self.update()
 
     def __str__(self):
-        return self.name
+        return self.User_Name
 
 
 class Image(models.Model):
@@ -30,6 +31,17 @@ class Image(models.Model):
     Profile = models.ForeignKey(Profile)
     pub_date = models.DateTimeField(auto_now_add=True)
 
+    @classmethod
+    def todays_photos(cls):
+        today = dt.date.today()
+        uploads = cls.objects.filter(pub_date__date = today)
+        return uploads
+
+class NewsLetterRecipients(models.Model):
+    name = models.CharField(max_length =30)
+    email = models.EmailField()
+
+
     def save_image(self):
         self.save()
 
@@ -40,7 +52,14 @@ class Image(models.Model):
         self.update()
 
     def __str__(self):
-        return self.name
+        return self.Image_Name
+
+    
+    @classmethod
+    def days_photos(cls,date):
+        uploads = cls.objects.filter(pub_date__date = date)
+        return uploads
+
 
     @classmethod
     def search_by_Profile_User_Name(cls,search_term):
