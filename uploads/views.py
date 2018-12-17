@@ -12,6 +12,8 @@ from django.contrib.auth.decorators import login_required
 def welcome(request):
     return render(request, 'welcome.html')
 
+
+@login_required(login_url='/accounts/login/')
 def image(request,image_id):
     try:
         image = Image.objects.get(id = image_id)
@@ -68,9 +70,3 @@ def search_results(request):
         message = "You haven't searched for any term"
         return render(request, 'all-photos/search.html',{"message":message})
 
-def image(request,image_id):
-    try:
-        image = Image.objects.get(id =image_id)
-    except DoesNotExist:
-        raise Http404()
-    return render(request,"all-photos/image.html", {"image"})
