@@ -60,9 +60,9 @@ def convert_dates(dates):
 def search_results(request):
 
     if 'image' in request.GET and request.GET["image"]:
-        search_term = request.GET.get("image")
-        searched_images = Image.search_by_profile_user_name(search_term)
-        message = f"{search_term}"
+        search_profile = request.GET.get("image")
+        search_image = Image.search_by_profile_user_name(search_profile)
+        message = f"{search_profile}"
 
         return render(request, 'all-photos/search.html',{"message":message,"images": searched_images})
 

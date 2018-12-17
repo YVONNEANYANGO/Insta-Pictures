@@ -36,7 +36,10 @@ class Image(models.Model):
         today = dt.date.today()
         uploads = cls.objects.filter(pub_date__date = today)
         return uploads
-
+    
+    def save_image(self):
+        self.save()
+        
 class NewsLetterRecipients(models.Model):
     name = models.CharField(max_length =30)
     email = models.EmailField()
@@ -62,8 +65,8 @@ class NewsLetterRecipients(models.Model):
 
 
     @classmethod
-    def search_by_Profile_User_Name(cls,search_term):
-        uploads = cls.objects.filter(user_name__icontains=search_term)
+    def search_by_Profile_User_Name(cls,search_profile):
+        uploads = cls.objects.filter(user_name__icontains=search_profile)
         return images
 
 

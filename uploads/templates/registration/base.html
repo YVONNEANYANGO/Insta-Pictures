@@ -21,7 +21,9 @@
 </head>
 
 <body>
-    {% block content %} {%endblock%}
+    {% include "navbar.html" %}
+    {% block content %} 
+    {%endblock%}
     
     
     {% block scripts %}

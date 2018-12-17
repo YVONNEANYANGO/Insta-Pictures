@@ -4,9 +4,9 @@
 
     <div class="row">
         {% if images%}
-        <h2>Found {{ images|length }} of searched term {{message}}</h2>
+        <p>Found {{ images|length }} of searched profile {{message}}</p>
         {% else %}
-        <h2> Found 0 images for the search term {{message}}</h2>
+        <p> Found 0 images for the search profile {{message}}</p>
         {% endif %}
 
     </div>
