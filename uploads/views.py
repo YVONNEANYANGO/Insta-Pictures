@@ -4,7 +4,7 @@ from .models import Image,NewsLetterRecipients
 # from datetime as dt
 from django.http import Http404
 from .forms import NewsLetterForm
-# from .email import send_welcome_email
+from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 
 
@@ -29,8 +29,11 @@ def photos_today(request):
         if form.is_valid():
             name = form.cleaned_data['your_name']
             email = form.cleaned_data['email']
+
             recipient = NewsLetterRecipients(name = name,email =email)
             recipient.save()
+            send_welcome_email(name,email)
+
             HttpResponseRedirect('photos_today')
 
     else:
