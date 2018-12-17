@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Image,NewsLetterRecipients
+from .models import Image,NewsLetterRecipients,Comment
 # from datetime as dt
 from django.http import Http404
 from .forms import NewsLetterForm
@@ -9,8 +9,13 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+@login_required(login_url='accounts/login/')
 def welcome(request):
-    return render(request, 'welcome.html')
+    images = Image.objects.all()
+
+    comments = Comment.objects.all()
+
+    return render(request, 'welcome.html' ,{"images":images,"comments":comments})
 
 
 @login_required(login_url='/accounts/login/')
@@ -52,7 +57,8 @@ def convert_dates(dates):
 
     days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
 
-    # Returning the actual day of the week
+    # Returning the actual day of the week}
+
     day = days[day_number]
     return day
 
@@ -61,7 +67,7 @@ def search_results(request):
 
     if 'image' in request.GET and request.GET["image"]:
         search_profile = request.GET.get("image")
-        search_image = Image.search_by_profile_user_name(search_profile)
+        search_image = Image.search_by_profile_user(search_profile)
         message = f"{search_profile}"
 
         return render(request, 'all-photos/search.html',{"message":message,"images": searched_images})
@@ -69,4 +75,19 @@ def search_results(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'all-photos/search.html',{"message":message})
+
+@login_required(login_url='/accounts/login')
+def upload_image(request):
+    if request_method == 'POST':
+        uploadform.is_valid()
+        upload = uploadform.save(commit=False)
+        upload.profile = request.user.profile
+        upload.save()
+        return redirect('profile', username=request.user)
+
+    else:
+        uploadform = ImageForm()
+
+        return render(request, 'all-photos/profile.html', {'uploadform':uploadform})
+
 

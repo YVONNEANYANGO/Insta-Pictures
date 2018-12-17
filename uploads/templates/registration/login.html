@@ -1,12 +1,16 @@
 {%extends "registration/base.html"%}
 {% load bootstrap3 %}
 {% block content %}
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <!-- Empty div -->
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
+        <div class="col-md-3">
+            <img src="https://images.pexels.com/photos/1229456/pexels-photo-1229456.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="image" height="300" width="300">
+        </div>
+            
+        <div class="col-md-4" >
             {% if form.errors %}
+            <!-- <img src="https://www.instagram.com/static/images/homepage/screenshot5.jpg/0a2d3016f375.jpg" alt=""> -->
             <p> Password or Username is incorrect </p>
             {% endif %}
             <div class="panel panel-default">

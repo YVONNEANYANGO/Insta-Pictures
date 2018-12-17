@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Profile(models.Model):
     Profile = models.ImageField(upload_to = 'images/')
-    User_Name = models.CharField(max_length = 60)
+    User = models.CharField(max_length = 60)
     Bio = models.CharField(max_length = 500)
    
 
@@ -21,7 +21,7 @@ class Profile(models.Model):
         self.update()
 
     def __str__(self):
-        return self.User_Name
+        return self.User
 
 
 class Image(models.Model):
@@ -33,13 +33,14 @@ class Image(models.Model):
     Profile = models.ForeignKey(Profile)
     pub_date = models.DateTimeField(auto_now_add=True)
     profile_image = models.ImageField(upload_to='profiles/')
-    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+    User = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
 
 
 class Comment(models.Model):
     name = models.CharField(max_length = 30)
-    user = models.ForeignKey(user, null = True)
-    image = models.ForeignKey(Image,related_name ='comment')
+    user = models.ForeignKey(User, null = True)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE)
+
 
     @classmethod
     def todays_photos(cls):
@@ -65,7 +66,7 @@ class NewsLetterRecipients(models.Model):
         self.update()
 
     def __str__(self):
-        return self.Image_Name
+        return self.Image
 
     
     @classmethod
@@ -75,7 +76,7 @@ class NewsLetterRecipients(models.Model):
 
 
     @classmethod
-    def search_by_Profile_User_Name(cls,search_profile):
+    def search_by_Profile_User(cls,search_profile):
         uploads = cls.objects.filter(user_name__icontains=search_profile)
         return images
 

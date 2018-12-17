@@ -1,20 +1,21 @@
 {%extends 'all-photos/base.html'%}
-<!DOCTYPE html>
-<html>
-    
-    <header>
-<h1>Welcome to Insta-Pictures App</h1>
 
-<link rel="stylesheet" href="/static/css/base.css">
-</header>
-<body>
+{% block content%}
+<div class="container">
+    <div class="container-fluid" style="margin-bottom: 80px">
+        <h1>Hey</h1>
+        {% for image in images%}
+        <div class="row" style="text-align: center">
+        <img  src="{{image.Image.url}}" alt="">
+        </div>
+        {% for comment in comments%}
+        <p>{{comment.name}}</p>
+        <p>{{comment.user}}</p>
 
-        <navbar-header>
-        <a href="/"><i class="fa fa-home"></i></a>
-        <a href="/search/"><i class="fa fa-search"></i></a>
-        <a href="/upload/"><i class="fa fa-cloud-upload"></i></a>
-        <a href="/profile/"><i class="fa fa-user-o"></i></a>
-        </navbar-header>
-    </nav>
-</body>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
 
+
+{% endblock %}
