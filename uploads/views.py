@@ -27,11 +27,18 @@ def photos_today(request):
     if request.method == 'POST':
         form = NewsLetterForm(request.POST)
         if form.is_valid():
-            print('valid')
+            name = form.cleaned_data['your_name']
+            email = form.cleaned_data['email']
+            recipient = NewsLetterRecipients(name = name,email =email)
+            recipient.save()
+            HttpResponseRedirect('photos_today')
+
     else:
         form = NewsLetterForm()
+    
     return render(request, 'all-photos/today-photos.html', {"date": date,"uploads":uploads,"letterForm":form})
 
+    
 
 def convert_dates(dates):
 
