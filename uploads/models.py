@@ -1,11 +1,13 @@
 from django.db import models
 import datetime as dt
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Profile(models.Model):
     Profile = models.ImageField(upload_to = 'images/')
     User_Name = models.CharField(max_length = 60)
     Bio = models.CharField(max_length = 500)
+   
 
     # Methods
 
@@ -30,6 +32,14 @@ class Image(models.Model):
     Comments = models.CharField(max_length =60)
     Profile = models.ForeignKey(Profile)
     pub_date = models.DateTimeField(auto_now_add=True)
+    profile_image = models.ImageField(upload_to='profiles/')
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+
+
+class Comment(models.Model):
+    name = models.CharField(max_length = 30)
+    user = models.ForeignKey(user, null = True)
+    image = models.ForeignKey(Image,related_name ='comment')
 
     @classmethod
     def todays_photos(cls):
@@ -39,7 +49,7 @@ class Image(models.Model):
     
     def save_image(self):
         self.save()
-        
+
 class NewsLetterRecipients(models.Model):
     name = models.CharField(max_length =30)
     email = models.EmailField()

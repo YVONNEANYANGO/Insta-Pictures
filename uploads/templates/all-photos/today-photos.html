@@ -2,6 +2,18 @@
 {% load bootstrap3 %}
 <!-- Some content here-->
 
+<div class="row">
+    <!-- displaying Profiles -->
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <h2 class="text-center"> {{ profiles_item.title }} </h2>
+    </div>
+
+    <!--Display Profile images  -->
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <img src="{{photos_item.profiles_image.url}}" class="img-responsive" alt="Image">
+    </div>
+
+</div>
 <!-- Looping through uploads end   -->
 <div class="container-fluid">
 
