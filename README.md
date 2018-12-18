@@ -19,9 +19,8 @@ The user is able to:
  Behaviour                      | Output                                    | Expected Results         
  -------------------------------|-------------------------------------------|---------------------------
  To sign in to the application  |Enter user name,email address and password | Sign in successfully   
- To upload your pictures        |Click on the add pictures button           | Image will be uploaded
-                                |                                           | successfully          
- To like or leave a comment     |Click on the add comment form to add a     | Comment will be displayed                                 |comment                                    | on the particular image
+ To upload your pictures        |Click on the add pictures button           | Image will be uploaded successfully
+ To like or leave a comment     |Click on the add comment form to add a     | Comments will be displayed                                                     |comment                                    | on the particular image
                                                                                                                         
 ## Terminologies Used
 
