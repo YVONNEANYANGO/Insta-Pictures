@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Image,NewsLetterRecipients,Comment
 # from datetime as dt
 from django.http import Http404
-from .forms import NewsLetterForm
+from .forms import NewsLetterForm,forms
 from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 
@@ -15,7 +15,25 @@ def welcome(request):
 
     comments = Comment.objects.all()
 
-    return render(request, 'welcome.html' ,{"images":images,"comments":comments})
+    form = NewsLetterForm()
+
+    # forms = Form.objects.all()
+    if request.method == 'POST':
+        form = NewsLetterForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['your_name']
+            email = form.cleaned_data['email']
+
+            recipient = NewsLetterRecipients(name=name, email=email)
+            recipient.save()
+            send_welcome_email(name, email)
+
+            HttpResponseRedirect('photos_today')
+
+    else:
+        form = NewsLetterForm()
+
+    return render(request, 'welcome.html' ,{"images":images,"comments":comments, "LetterForm":form})
 
 
 @login_required(login_url='/accounts/login/')
@@ -29,7 +47,8 @@ def image(request,image_id):
 
 def photos_today(request):
     date = dt.date.today()
-    photos = Image.todays_photos()
+    images = Image.todays_photos()
+    form = NewsLetterForm()
 
     if request.method == 'POST':
         form = NewsLetterForm(request.POST)
@@ -46,7 +65,7 @@ def photos_today(request):
     else:
         form = NewsLetterForm()
     
-    return render(request, 'all-photos/today-photos.html', {"date": date,"uploads":uploads,"letterForm":form})
+    return render(request, 'all-photos/comments.html', {"date": date,"images":images,"letterForm":form, "form":form})
 
     
 

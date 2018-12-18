@@ -16,15 +16,14 @@ The user is able to:
 
 ## Behaviour Driven Development(BDD)
 
- Behaviour                    | Output                      | Expected Results                       |
-------------------------------|-----------------------------|----------------------------------------|
- To sign in to the application| Enter user name,email       |                                        |
-                              | address and password        | You have successfully signed in to the |
-                              |                             | application                            |
- To upload your pictures      | Click on the uploads and    |                                        |
-                              | click on the add button     | Image will be uploaded successfully    |
- To like or leave a comment   | Click on the add comment    | Comment will be displayed on the       |
-                              | form to add a comment       | particular image                       |
+ Behaviour                      | Output                                    | Expected Results         
+ -------------------------------|-------------------------------------------|---------------------------
+ To sign in to the application  |Enter user name,email address and password | Sign in successfully   
+ -------------------------------|-------------------------------------------|---------------------------
+ To upload your pictures        |Click on the add pictures button           | Image will be uploaded                                    |                                           | successfully               
+ -------------------------------|-------------------------------------------|---------------------------
+ To like or leave a comment     |Click on the add comment form to add       | Comment will be displayed                                 |a comment                                  | on the particular image
+                                  
                             
                                                              
 ## Terminologies Used

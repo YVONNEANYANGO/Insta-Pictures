@@ -39,7 +39,7 @@ class Image(models.Model):
 class Comment(models.Model):
     name = models.CharField(max_length = 30)
     user = models.ForeignKey(User, null = True)
-    image = models.ForeignKey(Image, on_delete=models.CASCADE)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE,related_name='comments')
 
 
     @classmethod
