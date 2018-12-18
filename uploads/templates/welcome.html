@@ -1,5 +1,6 @@
 {%extends 'all-photos/base.html'%}
 
+
 {% block content%}
 <div class="container">
     <div class="container-fluid" style="text-align: center">
@@ -7,7 +8,7 @@
         {% for image in images%}
         <div class="row" style="text-align: center">
             <div class="column" style="margin-bottom: 80px">
-                <img  src="{{image.Image.url}}" alt="" >
+                <img src="{{image.Image.url}}" alt="">
             </div>
         </div>
         {% for comment in image.comments.all %}

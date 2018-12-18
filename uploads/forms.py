@@ -6,6 +6,6 @@ class NewsLetterForm(forms.Form):
 
 
 class Comment(forms.Form):
-    name = forms.CharField(label='Comments' ,max_length=30)
+    details = forms.CharField(label='Comments' ,max_length=30)
     
     

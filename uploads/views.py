@@ -15,26 +15,8 @@ def welcome(request):
 
     comments = Comment.objects.all()
 
-    form = NewsLetterForm()
-
-    # forms = Form.objects.all()
-    if request.method == 'POST':
-        form = NewsLetterForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['your_name']
-            email = form.cleaned_data['email']
-
-            recipient = NewsLetterRecipients(name=name, email=email)
-            recipient.save()
-            send_welcome_email(name, email)
-
-            HttpResponseRedirect('photos_today')
-
-    else:
-        form = NewsLetterForm()
-
-    return render(request, 'welcome.html' ,{"images":images,"comments":comments, "LetterForm":form})
-
+    
+    return render(request, 'welcome.html' ,{"images":images,"comments":comments,"form":forms })
 
 @login_required(login_url='/accounts/login/')
 def image(request,image_id):
@@ -48,6 +30,7 @@ def image(request,image_id):
 def photos_today(request):
     date = dt.date.today()
     images = Image.todays_photos()
+
     form = NewsLetterForm()
 
     if request.method == 'POST':
@@ -56,16 +39,20 @@ def photos_today(request):
             name = form.cleaned_data['your_name']
             email = form.cleaned_data['email']
 
-            recipient = NewsLetterRecipients(name = name,email =email)
+            recipient = NewsLetterRecipients(name=name, email=email)
             recipient.save()
-            send_welcome_email(name,email)
+            send_welcome_email(name, email)
 
-            HttpResponseRedirect('photos_today')
+            HttpResponseRedirect('welcomes.html')
+            print('valid')
 
     else:
-        form = NewsLetterForm()
+        form = NewsLetterFor
+
+    forms = Form.objects.all()
+  
     
-    return render(request, 'all-photos/comments.html', {"date": date,"images":images,"letterForm":form, "form":form})
+    return render(request, 'all-photos/pictures.html', {"date": date,"images":images})
 
     
 
@@ -86,7 +73,7 @@ def search_results(request):
 
     if 'image' in request.GET and request.GET["image"]:
         search_profile = request.GET.get("image")
-        search_image = Image.search_by_profile_user(search_profile)
+        search_image = Image.search_by_profile(search_profile)
         message = f"{search_profile}"
 
         return render(request, 'all-photos/search.html',{"message":message,"images": searched_images})
