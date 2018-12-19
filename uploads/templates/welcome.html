@@ -12,9 +12,13 @@
                     <img src="{{image.Image.url}}" alt="">
                 </div>
             </div>
-            <form action="">
-                
-            </form>
+            <div class="row">
+                <h1 class="text-center">{{image.name}}</h1>
+            </div>
+            
+            <div class="row">
+                <p>{{image.post}}</p>
+            </div>
         </div>
         {% for comment in image.comments.all %}
         <p>{{comment.name}}</p>
