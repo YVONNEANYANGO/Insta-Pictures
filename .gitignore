@@ -1,6 +1,5 @@
 .env
 virtual/
 *.pyc
-instance/
 __pycache__/
 .vscode/
