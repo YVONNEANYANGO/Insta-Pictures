@@ -43,7 +43,7 @@ def photos_today(request):
             recipient.save()
             send_welcome_email(name, email)
 
-            HttpResponseRedirect('welcomes.html')
+            HttpResponseRedirect('welcome.html')
             print('valid')
 
     else:
@@ -52,7 +52,7 @@ def photos_today(request):
     forms = Form.objects.all()
   
     
-    return render(request, 'all-photos/pictures.html', {"date": date,"images":images})
+    return render(request, 'all-photos/welcome.html', {"date": date,"images":images, "Letterform":form})
 
     
 
@@ -70,17 +70,28 @@ def convert_dates(dates):
 
 
 def search_results(request):
-
     if 'image' in request.GET and request.GET["image"]:
         search_profile = request.GET.get("image")
         search_image = Image.search_by_profile(search_profile)
         message = f"{search_profile}"
 
-        return render(request, 'all-photos/search.html',{"message":message,"images": searched_images})
+        return render(request, 'all-photos/search.html',{"message":message,"images": searched_profile})
 
     else:
         message = "You haven't searched for any term"
-        return render(request, 'all-photos/search.html',{"message":message})
+        return render(request, 'all-photos/search.html',{"message":message}) 
+        
+
+def profile(request):
+    current_user=request.user
+    photos=Image.objects.filter(profile=current_user)
+    try:
+        profile = Profile.objects.get(user=current_user)
+    except ObjectDoesNotExist:
+        return redirect('create-profile')
+
+    return render(request, 'profile.html', {"photos":photos, "profile":profile})
+
 
 @login_required(login_url='/accounts/login')
 def upload_image(request):
