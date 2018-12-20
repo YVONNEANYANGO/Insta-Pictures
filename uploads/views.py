@@ -18,13 +18,28 @@ def welcome(request):
     
     return render(request, 'welcome.html' ,{"images":images,"comments":comments,"form":forms })
 
+
 @login_required(login_url='/accounts/login/')
 def image(request,image_id):
     try:
         image = Image.objects.get(id = image_id)
     except DoesNotExist:
         raise Http404()
-    return render(request,"all-photos/pics.html", {{"image":image}})
+    return render(request,"all-photos/profile.html", {{"image":image}})
+
+
+def new_image(request):
+    current_user=request.user
+    if request.method == 'POST':
+        form = NewImageForm(request.POST,request.FILES)
+        if form.is_valid():
+            image=form.save(commit=False)
+            image.profile = Current_user
+            image.save()
+        return redirect('index')
+    else:
+        form=NewImageForm()
+    return render(request, 'new_image.html', {"form":form})
 
 
 def photos_today(request):
@@ -70,9 +85,9 @@ def convert_dates(dates):
 
 
 def search_results(request):
-    if 'image' in request.GET and request.GET["image"]:
-        search_profile = request.GET.get("image")
-        search_image = Image.search_by_profile(search_profile)
+    if 'profile' in request.GET and request.GET["profile"]:
+        search_profile = request.GET.get("profile")
+        search_profile = profile.search_by_profile(search_profile)
         message = f"{search_profile}"
 
         return render(request, 'all-photos/search.html',{"message":message,"images": searched_profile})
@@ -80,7 +95,7 @@ def search_results(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'all-photos/search.html',{"message":message}) 
-        
+
 
 def profile(request):
     current_user=request.user
@@ -106,5 +121,6 @@ def upload_image(request):
         uploadform = ImageForm()
 
         return render(request, 'all-photos/profile.html', {'uploadform':uploadform})
+
 
 

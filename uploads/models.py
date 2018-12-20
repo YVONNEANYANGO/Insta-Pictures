@@ -76,7 +76,7 @@ class NewsLetterRecipients(models.Model):
 
 
     @classmethod
-    def search_by_Profile_User(cls,search_profile):
+    def search_by_Profile(cls,search_profile):
         uploads = cls.objects.filter(user_name__icontains=search_profile)
         return images
 
